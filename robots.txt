@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://privatelesson.co.kr/sitemap.xml
