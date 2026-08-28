@@ -225,7 +225,7 @@ ${footer()}
 function hubTemplate() {
   const groups = REGIONS.map(region => {
     const links = GRADE_LIST.map(g => `<a href="/areas/${encodeURIComponent(regionSlug(region, g))}.html">${region.name} ${g.label}</a>`).join('\n          ');
-    return `      <div style="margin-bottom:28px;">
+    return `      <div id="${esc(region.name)}" style="margin-bottom:28px; scroll-margin-top:90px;">
         <h3 style="margin-bottom:12px;">${esc(region.name)}</h3>
         <div class="region-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
           ${links}
