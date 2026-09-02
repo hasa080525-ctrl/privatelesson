@@ -37,13 +37,26 @@ function submitApplyForm(){
   const grade = document.getElementById('fGrade');
   const subject = document.getElementById('fSubject');
   const message = document.getElementById('fMessage');
+  const gradeVal = grade ? grade.value : '';
+  const subjectVal = subject ? subject.value : '';
+  const messageVal = message && message.value.trim() ? message.value.trim() : '(없음)';
   const summary =
     '[초등탄탄 무료 진단 신청]\n' +
     '학생 이름: ' + name.value.trim() + '\n' +
     '연락처: ' + phone.value.trim() + '\n' +
-    (grade ? '학년: ' + grade.value + '\n' : '') +
-    (subject ? '희망 과목: ' + subject.value + '\n' : '') +
-    '남기신 말씀: ' + (message && message.value.trim() ? message.value.trim() : '(없음)');
+    (grade ? '학년: ' + gradeVal + '\n' : '') +
+    (subject ? '희망 과목: ' + subjectVal + '\n' : '') +
+    '남기신 말씀: ' + messageVal;
+
+  if(window.emailjs){
+    emailjs.send('service_ldp43b2', 'template_wnwb8ba', {
+      student_name: name.value.trim(),
+      phone: phone.value.trim(),
+      grade: gradeVal,
+      subject: subjectVal,
+      message: messageVal
+    }).catch(function(err){ console.error('EmailJS send failed:', err); });
+  }
 
   window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
 
