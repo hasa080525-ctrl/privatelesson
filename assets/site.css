@@ -147,6 +147,13 @@ section{padding:76px 0;}
 .review-card p{font-size:13.5px; color:var(--navy); line-height:1.8; margin-bottom:14px;}
 .review-who{font-size:12px; color:var(--slate-2); font-weight:700;}
 
+.news-grid{display:flex; flex-direction:column; gap:18px; max-width:760px; margin:0 auto;}
+.news-card{background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:26px 24px;}
+.news-date{font-size:12px; font-weight:700; color:var(--coral-dark); letter-spacing:0.04em; margin-bottom:10px;}
+.news-card h3{font-size:16px; line-height:1.5; margin-bottom:10px; color:var(--navy);}
+.news-card p{font-size:13.5px; color:var(--slate); line-height:1.75; margin-bottom:12px;}
+.news-card a{font-size:12.5px; font-weight:700; color:var(--coral-dark); text-decoration:underline;}
+
 .faq-item{border-bottom:1px solid var(--line);}
 .faq-q{display:flex; justify-content:space-between; align-items:center; padding:20px 4px; cursor:pointer; font-size:15px; font-weight:700; color:var(--navy);}
 .faq-q .plus{color:var(--coral); font-size:18px; transition:transform .2s ease;}
