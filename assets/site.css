@@ -88,12 +88,11 @@ header{
 .breadcrumb a:hover{color:var(--coral-dark);}
 .breadcrumb .sep{margin:0 6px;}
 
-.hero{background:var(--navy); color:#fff; position:relative; overflow:hidden;}
-.hero::after{
-  content:''; position:absolute; inset:-12px;
-  background:url('/assets/hero-bg.jpg') center/cover no-repeat;
-  filter:blur(14px) brightness(0.5) saturate(1.05);
-  z-index:0;
+.hero{
+  background:
+    linear-gradient(100deg, rgba(23,50,65,0.94) 0%, rgba(23,50,65,0.84) 40%, rgba(23,50,65,0.5) 100%),
+    url('/assets/hero-bg-v2.jpg') center/cover no-repeat;
+  color:#fff; position:relative; overflow:hidden;
 }
 .hero::before{
   content:''; position:absolute; inset:0; z-index:1;
