@@ -1,8 +1,8 @@
 /*
  * Generates static landing pages under /areas/:
  *  - 1 hub page listing all 16 regions
- *  - 16 region pages x 6 grades (초1~초6) = 96 region pages
- *  - ~230 district pages x 6 grades = ~1380 district pages
+ *  - 16 region pages x 12 grades (초1~고3) = 192 region pages
+ *  - ~230 district pages x 12 grades = ~2750 district pages
  * Also (re)writes sitemap-areas.xml with every URL from this run.
  * Re-run this script (`node scripts/generate-areas.js`) whenever region/
  * grade copy needs to change - do not hand-edit the generated files.
@@ -41,6 +41,12 @@ const GRADES = {
   g4: { label: '초4과외', title: '초4 서술형·분수의 벽', tag: '서술형·분수의 벽', body: '서술형 문제에 적응하고, 분수·소수 등 추상적 개념을 구체물로 이해하는 시기입니다.', subjects: ['서술형 문제 적응(국어)', '분수 · 소수(수학)', '기초 문법 시작(영어)'] },
   g5: { label: '초5과외', title: '초5 도형·비율 심화', tag: '개념 확장기', body: '글의 구조를 파악하는 훈련과, 도형·비와 비율 등 확장된 수학 개념을 다루는 시기입니다.', subjects: ['글의 구조 파악(국어)', '도형 · 비율(수학)', '문법 체계 시작(영어)'] },
   g6: { label: '초6과외', title: '초6 중등 대비 마무리', tag: '중등 대비 마무리', body: '초등 6년을 총정리하며, 결손 없이 중등 학습으로 이어지도록 준비하는 시기입니다.', subjects: ['중등 국어 대비(국어)', '중등 수학 기초체력(수학)', '중등 영어 준비(영어)'] },
+  m1: { label: '중1과외', title: '중1 자유학기제 활용, 서술형 대비 기초', tag: '진로 탐색기', body: '자유학기제 활동으로 독서·글쓰기 흥미를 넓히고, 문자와 식 등 흔들리기 쉬운 수학 개념을 확실히 짚는 시기입니다.', subjects: ['자유학기제 활용 독서·글쓰기(국어)', '문자와 식 기초(수학)', '중등 서술형·수행평가 대비(영어)'] },
+  m2: { label: '중2과외', title: '중2 정식 내신 시작, 시험 대비 습관', tag: '첫 내신 시작기', body: '본격적인 지필 내신이 시작되며 학습 습관이 굳어지는 시기입니다. 함수 등 새 단원 개념을 놓치지 않도록 진도를 촘촘히 챙깁니다.', subjects: ['문학·비문학 독해 전략(국어)', '함수 단원 개념(수학)', '내신 서술형·어법(영어)'] },
+  m3: { label: '중3과외', title: '중3 고교 대비, 진로 탐색', tag: '고교 대비기', body: '진학할 고등학교 유형이 정해지는 시기이자, 고1 공통과목 이후 이어질 학습에 대비하는 시기입니다.', subjects: ['고등 국어 문학·독서 예습(국어)', '이차함수·도형 기초(수학)', '고등 내신형 지문 독해(영어)'] },
+  h1: { label: '고1과외', title: '고1 공통과목 이수, 첫 상대평가', tag: '공통과목·첫 내신', body: '전 과목 공통과목을 이수하며 처음으로 상대평가 등급을 경험하는 시기입니다.', subjects: ['공통국어 첫 내신 관리(국어)', '공통수학 결손 보완(수학)', '내신 서술형·수능형 독해(영어)'] },
+  h2: { label: '고2과외', title: '고2 진로·융합선택과목 비중 확대', tag: '선택과목 심화기', body: '성취평가제(절대평가)가 적용되는 진로선택·융합선택과목 비중이 커지는 시기입니다.', subjects: ['화법과 언어 등 선택과목(국어)', '미적분·확률과통계 심화(수학)', '성취평가제 과목 학습법(영어)'] },
+  h3: { label: '고3과외', title: '고3 등급 마무리, 입시 전략 병행', tag: '학점이수 마무리', body: '남은 학점을 마무리하며 수시·정시 등 대입 전형 전략을 함께 준비하는 시기입니다.', subjects: ['수능 국어 실전 감각(국어)', '취약 단원 집중 보완(수학)', '수능 영어 절대평가 전략(영어)'] },
 };
 const GRADE_LIST = Object.values(GRADES);
 
@@ -51,6 +57,7 @@ function topicParticle(name) {
   if (code < 0 || code > 11171) return '은';
   return code % 28 === 0 ? '는' : '은';
 }
+function isSecondary(grade) { return grade.label.charAt(0) !== '초'; }
 function regionSlug(region, grade) { return `${region.name}-${grade.label}`; }
 function districtSlug(region, district, grade) { return `${region.name}-${baseName(district)}-${grade.label}`; }
 
@@ -67,7 +74,7 @@ function head(title, desc, canonical, keywords) {
 <link rel="stylesheet" href="/assets/site.css">
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="초등탄탄">
+<meta property="og:site_name" content="탄탄과외">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="${SITE}/og-image.jpg">
@@ -76,7 +83,7 @@ function head(title, desc, canonical, keywords) {
 function header() {
   return `<header>
   <div class="wrap nav">
-    <a class="logo" href="/"><span class="logo-mark">탄</span>초등탄탄</a>
+    <a class="logo" href="/"><span class="logo-mark">탄</span>탄탄과외</a>
     <a class="nav-cta" href="tel:010-3951-0535">무료 진단 신청<span class="nav-cta-num">010-3951-0535</span></a>
   </div>
 </header>
@@ -89,7 +96,7 @@ function header() {
 function footer() {
   return `<footer>
   <div class="wrap">
-    <p>© 2026 초등탄탄. All rights reserved. · <a href="/">홈으로</a></p>
+    <p>© 2026 탄탄과외. All rights reserved. · <a href="/">홈으로</a></p>
   </div>
 </footer>`;
 }
@@ -110,10 +117,13 @@ function faqMini(place) {
 }
 
 function regionPageTemplate(region, grade) {
-  const title = `${region.name} ${grade.label} | 초등탄탄`;
+  const secondary = isSecondary(grade);
+  const title = `${region.name} ${grade.label} | 탄탄과외`;
   const desc = `${region.name} 지역 ${grade.title} 안내. ${grade.body} 화상 수업이 기본이며, 지역에 따라 방문 수업도 상담 후 진행합니다.`;
   const canonical = `${SITE}/areas/${encodeURIComponent(regionSlug(region, grade))}.html`;
-  const keywords = `${region.name}${grade.label}, ${region.name} ${grade.label}, ${grade.label}, ${region.name} 초등과외, ${region.name} 초등 전문과외`;
+  const keywords = secondary
+    ? `${region.name}${grade.label}, ${region.name} ${grade.label}, ${grade.label}, ${region.name} 중고등과외, ${region.name} 내신관리과외`
+    : `${region.name}${grade.label}, ${region.name} ${grade.label}, ${grade.label}, ${region.name} 초등과외, ${region.name} 초등 전문과외`;
   const otherGrades = GRADE_LIST.filter(g => g.label !== grade.label)
     .map(g => `<a href="/areas/${encodeURIComponent(regionSlug(region, g))}.html">${g.label}</a>`).join(' · ');
   const districtLinks = region.districts.length
@@ -131,7 +141,7 @@ ${header()}
 <div class="subpage-hero">
   <div class="wrap">
     <h1>${esc(region.name)} ${esc(grade.label)}</h1>
-    <p>초등탄탄이 ${esc(region.name)} 지역 ${esc(grade.title)}를 안내합니다.</p>
+    <p>탄탄과외가 ${esc(region.name)} 지역 ${esc(grade.title)}를 안내합니다.</p>
   </div>
 </div>
 <section>
@@ -171,12 +181,15 @@ ${footer()}
 }
 
 function districtPageTemplate(region, district, grade) {
+  const secondary = isSecondary(grade);
   const district_ = baseName(district);
-  const title = `${region.name} ${district_} ${grade.label} | 초등탄탄`;
+  const title = `${region.name} ${district_} ${grade.label} | 탄탄과외`;
   const desc = `${region.name} ${district_} 지역 ${grade.title} 안내. ${grade.body} 화상 수업이 기본이며, 지역에 따라 방문 수업도 상담 후 진행합니다.`;
   const canonical = `${SITE}/areas/${encodeURIComponent(districtSlug(region, district, grade))}.html`;
   const parentUrl = `/areas/${encodeURIComponent(regionSlug(region, grade))}.html`;
-  const keywords = `${district_}${grade.label}, ${district_} ${grade.label}, ${region.name}${district_}과외, ${grade.label}`;
+  const keywords = secondary
+    ? `${district_}${grade.label}, ${district_} ${grade.label}, ${region.name}${district_}과외, ${grade.label}, ${district_} 중고등과외`
+    : `${district_}${grade.label}, ${district_} ${grade.label}, ${region.name}${district_}과외, ${grade.label}`;
   const hasSub = /\(.*\)$/.test(district);
   const subNote = hasSub ? district.match(/\((.*)\)$/)[1] : '';
 
@@ -191,7 +204,7 @@ ${header()}
 <div class="subpage-hero">
   <div class="wrap">
     <h1>${esc(district_)} ${esc(grade.label)}</h1>
-    <p>초등탄탄이 ${esc(district_)} 지역 ${esc(grade.title)}를 안내합니다.</p>
+    <p>탄탄과외가 ${esc(district_)} 지역 ${esc(grade.title)}를 안내합니다.</p>
   </div>
 </div>
 <section>
@@ -236,15 +249,15 @@ function hubTemplate() {
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
-${head('전국 지역별 초등과외 전체 목록 | 초등탄탄', '전국 16개 광역지자체, 시/군/구, 초1~초6 학년별 안내 페이지 모음입니다.', `${SITE}/areas/`, '전국 초등과외, 지역별 초등 전문과외, 지역별 초등 1:1 과외')}
+${head('전국 지역별 초중고 과외 전체 목록 | 탄탄과외', '전국 16개 광역지자체, 시/군/구, 초1~고3 학년별 탄탄과외 안내 페이지 모음입니다.', `${SITE}/areas/`, '전국 초중고 과외, 지역별 초등 전문과외, 지역별 중고등 내신과외, 지방 초중고 과외')}
 </head>
 <body>
 ${header()}
 <div class="breadcrumb"><a href="/">홈</a><span class="sep">/</span><span>지역별 과외</span></div>
 <div class="subpage-hero">
   <div class="wrap">
-    <h1>전국 지역별 초등과외 전체 목록</h1>
-    <p>전국 16개 광역지자체, 시/군/구, 초1~초6 학년별 안내 페이지를 정리했습니다.</p>
+    <h1>전국 지역별 초중고 과외 전체 목록</h1>
+    <p>전국 16개 광역지자체, 시/군/구, 초1~고3 학년별 안내 페이지를 정리했습니다. 학원이 가까이 없는 지방·읍면 지역도 서울과 동일한 커리큘럼으로 화상 수업을 받을 수 있습니다.</p>
   </div>
 </div>
 <section>

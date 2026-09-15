@@ -41,7 +41,7 @@ function submitApplyForm(){
   const subjectVal = subject ? subject.value : '';
   const messageVal = message && message.value.trim() ? message.value.trim() : '(없음)';
   const summary =
-    '[초등탄탄 무료 진단 신청]\n' +
+    '[탄탄과외 무료 진단 신청]\n' +
     '학생 이름: ' + name.value.trim() + '\n' +
     '연락처: ' + phone.value.trim() + '\n' +
     (grade ? '학년: ' + gradeVal + '\n' : '') +
