@@ -89,12 +89,18 @@ header{
 .breadcrumb .sep{margin:0 6px;}
 
 .hero{background:var(--navy); color:#fff; position:relative; overflow:hidden;}
+.hero::after{
+  content:''; position:absolute; inset:-12px;
+  background:url('/assets/hero-bg.jpg') center/cover no-repeat;
+  filter:blur(14px) brightness(0.5) saturate(1.05);
+  z-index:0;
+}
 .hero::before{
-  content:''; position:absolute; inset:0;
+  content:''; position:absolute; inset:0; z-index:1;
   background:radial-gradient(ellipse 620px 420px at 88% 10%, rgba(255,111,76,0.18), transparent 60%);
   pointer-events:none;
 }
-.hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center; padding:80px 0; position:relative; z-index:1;}
+.hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center; padding:80px 0; position:relative; z-index:2;}
 .hero-eyebrow{display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.08); font-size:13px; font-weight:700; color:var(--gold); padding:8px 16px; border-radius:999px; margin-bottom:22px;}
 .hero h1{font-size:38px; line-height:1.35; color:#fff; margin-bottom:18px;}
 .hero h1 em{font-style:normal; color:var(--coral);}
