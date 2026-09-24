@@ -58,6 +58,11 @@ function submitApplyForm(){
     }).catch(function(err){ console.error('EmailJS send failed:', err); });
   }
 
+  fetch('https://script.google.com/macros/s/AKfycbwOqTTLkqZ_frFyT6N0QcjYZT3jsG0puhq9wRmrQSPxhFgn0fXET3AoGVj4PiHMNHcg/exec', {
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ site: '탄탄과외', name: name.value.trim(), phone: phone.value.trim(), grade: gradeVal, subject: subjectVal, message: messageVal })
+  }).catch(function(err){ console.error('구글시트 전송 실패:', err); });
+
   window.open('https://open.kakao.com/o/sOXeVnpi', '_blank', 'noopener');
 
   if(navigator.clipboard && navigator.clipboard.writeText){
