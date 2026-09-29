@@ -106,7 +106,7 @@ function faqMini(place) {
     <div class="section-head"><h2>자주 묻는 질문</h2></div>
     <div class="faq-item open">
       <div class="faq-q">${esc(place)}에서도 방문 수업이 가능한가요?<span class="plus">+</span></div>
-      <div class="faq-a"><p>화상 수업이 기본이며, 전국 어디서나 동일하게 진행됩니다. 방문 수업은 지역과 선생님 배정 상황에 따라 상담 후 가능 여부를 안내해드립니다.</p></div>
+      <div class="faq-a"><p>별도의 방문 수업 없이 전국 어디서나 실시간 화상 수업으로만 진행됩니다. 지역에 상관없이 서울과 동일한 선생님, 동일한 커리큘럼으로 수업받을 수 있습니다.</p></div>
     </div>
     <div class="faq-item">
       <div class="faq-q">상담이나 학습 진단에 비용이 드나요?<span class="plus">+</span></div>
@@ -119,7 +119,7 @@ function faqMini(place) {
 function regionPageTemplate(region, grade) {
   const secondary = isSecondary(grade);
   const title = `${region.name} ${grade.label} | 탄탄과외`;
-  const desc = `${region.name} 지역 ${grade.title} 안내. ${grade.body} 화상 수업이 기본이며, 지역에 따라 방문 수업도 상담 후 진행합니다.`;
+  const desc = `${region.name} 지역 ${grade.title} 안내. ${grade.body} 전국 어디서나 실시간 화상 수업으로 진행합니다.`;
   const canonical = `${SITE}/areas/${encodeURIComponent(regionSlug(region, grade))}.html`;
   const keywords = secondary
     ? `${region.name}${grade.label}, ${region.name} ${grade.label}, ${grade.label}, ${region.name} 중고등과외, ${region.name} 내신관리과외`
@@ -184,7 +184,7 @@ function districtPageTemplate(region, district, grade) {
   const secondary = isSecondary(grade);
   const district_ = baseName(district);
   const title = `${region.name} ${district_} ${grade.label} | 탄탄과외`;
-  const desc = `${region.name} ${district_} 지역 ${grade.title} 안내. ${grade.body} 화상 수업이 기본이며, 지역에 따라 방문 수업도 상담 후 진행합니다.`;
+  const desc = `${region.name} ${district_} 지역 ${grade.title} 안내. ${grade.body} 전국 어디서나 실시간 화상 수업으로 진행합니다.`;
   const canonical = `${SITE}/areas/${encodeURIComponent(districtSlug(region, district, grade))}.html`;
   const parentUrl = `/areas/${encodeURIComponent(regionSlug(region, grade))}.html`;
   const keywords = secondary
