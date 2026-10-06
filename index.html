@@ -125,6 +125,74 @@
   </div>
 </section>
 
+<button type="button" class="help-banner" onclick="openHelpModal()">
+  <div>
+    <div class="help-banner-text">어떤 과목이 고민이세요?</div>
+    <div class="help-banner-sub">과목만 고르시면 맞는 선생님을 찾아 연락드립니다</div>
+  </div>
+  <span class="help-banner-arrow">빠르게 선택하기 →</span>
+</button>
+
+<div class="help-modal-overlay" id="helpModalOverlay" onclick="if(event.target===this)closeHelpModal()">
+  <div class="help-modal">
+    <button type="button" class="help-modal-close" aria-label="닫기" onclick="closeHelpModal()">×</button>
+
+    <div id="helpStep1">
+      <h3>어떤 도움이 필요하세요?</h3>
+      <p class="help-modal-sub">과목만 고르시면 맞는 선생님을 찾아 연락드립니다</p>
+      <div class="help-grid">
+        <div class="help-card" onclick="pickHelpSubject('국어', '국어과외', '어휘력·독해력부터 서술형 대비, 고학년은 인문논술까지')"><span class="help-card-icon">📖</span>국어과외</div>
+        <div class="help-card" onclick="pickHelpSubject('수학', '수학과외', '연산 정확도부터 개념 이해까지, 결손 없이 순서대로')"><span class="help-card-icon">📐</span>수학과외</div>
+        <div class="help-card" onclick="pickHelpSubject('영어', '영어과외', '파닉스·기초 문법부터 중등 독해력까지')"><span class="help-card-icon">🔤</span>영어과외</div>
+        <div class="help-card" onclick="pickHelpSubject('추천받고 싶어요', '학년별 맞춤 추천', '학년과 상황에 맞는 과목·선생님을 추천해드립니다')"><span class="help-card-icon">🎯</span>학년별 맞춤 추천</div>
+      </div>
+    </div>
+
+    <div id="helpStep2" style="display:none;">
+      <button type="button" class="help-back" onclick="backToHelpStep1()">← 다시 고르기</button>
+      <h3 class="help-step2-title" id="helpStep2Title">국어과외</h3>
+      <p class="help-step2-tagline" id="helpStep2Tagline"></p>
+
+      <div class="help-section-label">학년</div>
+      <div class="help-pill-grid" id="helpGradeGrid">
+        <button type="button" class="help-pill" data-grade="초1">초1</button>
+        <button type="button" class="help-pill" data-grade="초2">초2</button>
+        <button type="button" class="help-pill" data-grade="초3">초3</button>
+        <button type="button" class="help-pill" data-grade="초4">초4</button>
+        <button type="button" class="help-pill" data-grade="초5">초5</button>
+        <button type="button" class="help-pill" data-grade="초6">초6</button>
+        <button type="button" class="help-pill" data-grade="중1">중1</button>
+        <button type="button" class="help-pill" data-grade="중2">중2</button>
+        <button type="button" class="help-pill" data-grade="중3">중3</button>
+        <button type="button" class="help-pill" data-grade="고1">고1</button>
+        <button type="button" class="help-pill" data-grade="고2">고2</button>
+        <button type="button" class="help-pill" data-grade="고3">고3</button>
+      </div>
+
+      <div class="help-video-note">💻 모든 수업은 화상(비대면)으로 진행됩니다</div>
+
+      <div class="help-section-label">연락처</div>
+      <div class="help-form-row">
+        <div class="help-field"><label>이름 *</label><input type="text" id="hName" placeholder="예: 김민준"></div>
+        <div class="help-field"><label>연락처 *</label><input type="tel" id="hPhone" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="help-field"><label>학교 *</label><input type="text" id="hSchool" placeholder="학교명을 입력해주세요"></div>
+      <div class="help-field"><label>주소 (자택 도로명 주소) *</label><input type="text" id="hAddress" placeholder="자택 도로명 주소를 입력해주세요"></div>
+      <div class="help-field"><label>특이사항 (원하시는 요일·시간, 아이 상황 등)</label><textarea id="hMessage" rows="3" placeholder="선택 입력"></textarea></div>
+
+      <button type="button" class="help-submit" onclick="submitHelpForm()">바로 신청하기</button>
+    </div>
+
+    <div id="helpStep3" style="display:none; text-align:center;">
+      <div style="font-size:40px; margin-bottom:10px;">🎉</div>
+      <h3>신청이 접수됐어요!</h3>
+      <p class="help-modal-sub">신청 내용이 정상적으로 접수됐습니다.<br>확인 후 빠르게 연락드리겠습니다.</p>
+      <a href="tel:010-3951-0535" class="help-submit" style="display:block; text-decoration:none; margin-top:20px;">☎ 바로 전화 상담하기 · 010-3951-0535</a>
+      <button type="button" class="help-back" style="margin-top:16px;" onclick="closeHelpModal()">홈페이지 더 둘러보기 →</button>
+    </div>
+  </div>
+</div>
+
 <section class="section-alt" style="padding:28px 0;">
   <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
     <div>
