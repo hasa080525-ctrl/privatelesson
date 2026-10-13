@@ -304,6 +304,8 @@ footer{background:var(--navy); color:#9FB0BA; padding:48px 0 26px;}
 .help-form-row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
 .help-submit{width:100%; padding:15px; background:var(--coral); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:15px; margin-top:10px;}
 .help-submit:hover{background:var(--coral-dark);}
+.help-kakao{display:block; width:100%; padding:15px; margin-top:10px; background:#FEE500; color:#191919; border:none; border-radius:10px; font-weight:700; font-size:15px; text-align:center; text-decoration:none;}
+.help-kakao:hover{background:#FFD900;}
 @media (max-width:480px){
   .help-form-row{grid-template-columns:1fr;}
 }
